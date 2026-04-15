@@ -62,7 +62,7 @@ def check_netflix_account(filename):
         
         html = r.text
         
-        # **EXACT 1: Next payment - PERFECT MATCH HTML KAMU**
+        # **Response HTML**
         payment_match = re.search(
             r'<h3[^>]*data-uia="account-membership-page\+payments-card\+title"[^>]*>Next payment</h3>[^<]*<p[^>]*data-uia="account-membership-page\+payments-card\+description"[^>]*>([^<]+?)</p>',
             html,
@@ -71,11 +71,11 @@ def check_netflix_account(filename):
         
         date = payment_match.group(1).strip() if payment_match else 'Live'
         
-        # **EXACT 2: 4K Plan**
+        # **EXACT 4K Plan**
         if re.search(r'4K video resolution[^<]*?(?:spatial audio|ad-free)', html, re.I):
             return True, date, '4K 🔥'
         
-        # **EXACT 3: Plan title**
+        # **EXACT  Plan title**
         plan_match = re.search(
             r'data-uia="account-membership-page\+plan-card\+title"[^>]*>([^<]{1,30}?)<\/',
             html
@@ -127,7 +127,7 @@ def main():
     
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     with open(f'kenji_{ts}.txt', 'w') as f:
-        f.write(f"KENJI v5.0 - {count} LIVE\n\n")
+        f.write(f"KENJI  - {count} LIVE\n\n")
         for i, (file, date, res) in enumerate(live_accounts, 1):
             num = re.search(r'\((\d+)\)', file).group(1)
             f.write(f"{i:2d}. ({num}) {res} | {date}\n")
